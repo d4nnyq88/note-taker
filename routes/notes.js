@@ -9,7 +9,6 @@ notes.get('/', (req, res) =>
 
 // POST Route for saving a note
 notes.post('/', (req, res) => {
-    console.log(req.body);
   
     const { title, text } = req.body;
   
@@ -30,18 +29,14 @@ notes.post('/', (req, res) => {
 // POST Route for deleting a note
 
 notes.delete('/:id', async (req, res) => {
-  console.log(req.params);
 
   const { id } = req.params;
-  console.log(id);
 
   if (id) {
     
     const currentNotes = await readFromFile('./db/db.json').then((data) => JSON.parse(data));    
     
-    console.log('current notes ', currentNotes);
     const updatedNotes = currentNotes.filter(note => note.id !== id);
-    console.log('updated notes ', updatedNotes);
 
     writeToFile('./db/db.json', updatedNotes);
     res.json('Note successfuly deleted 🚀');
